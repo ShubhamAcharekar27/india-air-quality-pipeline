@@ -1,8 +1,16 @@
 import json
+import logging
+import sys
 from datetime import date
 from pathlib import Path
 
 import requests
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
+)
+logger = logging.getLogger(__name__)
 
 API_URL = "https://air-quality-api.open-meteo.com/v1/air-quality"
 
@@ -41,10 +49,25 @@ def save_raw(name: str, payload: dict, run_date: date) -> Path:
 
 def main() -> None:
     today = date.today()
+    failed = []
+
     for name, (lat, lon) in CITIES.items():
-        payload = fetch_city(name, lat, lon)
-        path = save_raw(name, payload, today)
-        print(f"Saved {name} -> {path}")
+        try:
+            payload = fetch_city(name, lat, lon)
+            path = save_raw(name, payload, today)
+            logger.info("Saved %s -> %s", name, path)
+        except requests.exceptions.RequestException as exc:
+            logger.error("API call failed for %s: %s", name, exc)
+            failed.append(name)
+        except (OSError, ValueError) as exc:
+            logger.error("Could not save data for %s: %s", name, exc)
+            failed.append(name)
+
+    if failed:
+        logger.error("Ingestion finished with failures: %s", ", ".join(failed))
+        sys.exit(1)
+
+    logger.info("Ingestion finished successfully for all %d cities", len(CITIES))
 
 
 if __name__ == "__main__":
