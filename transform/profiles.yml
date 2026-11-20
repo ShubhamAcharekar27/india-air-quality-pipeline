@@ -1,0 +1,8 @@
+air_quality:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ../warehouse/air_quality.duckdb
+      schema: main
+      threads: 1

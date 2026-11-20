@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: stg_air_quality_hourly
+    description: "Cleaned hourly air quality readings, one row per city per hour."
+    columns:
+      - name: city
+        data_tests:
+          - not_null
+      - name: reading_time
+        data_tests:
+          - not_null

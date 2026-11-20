@@ -1,0 +1,11 @@
+
+    
+    
+    truncate table "air_quality"."main"."cities";
+    -- dbt seed --
+    
+          COPY "air_quality"."main"."cities" FROM 'D:\Shubham\india-air-quality-pipeline\india-air-quality-pipeline\transform\seeds\cities.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',')
+        
+
+;
+  
