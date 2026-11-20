@@ -1,0 +1,6 @@
+# Pipeline data (rebuilt by the scripts)
+data/
+warehouse/
+transform/target/
+transform/dbt_packages/
+transform/logs/
