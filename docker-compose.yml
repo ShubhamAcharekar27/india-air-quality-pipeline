@@ -1,0 +1,13 @@
+services:
+  airflow:
+    build:
+      context: .
+      dockerfile: orchestration/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/project/orchestration/dags
+    volumes:
+      - .:/opt/airflow/project
+    command: standalone
