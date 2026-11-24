@@ -33,6 +33,9 @@ jobs:
       - name: Generate sample raw data
         run: python tests/generate_sample_data.py
 
+      - name: Start from a clean warehouse
+        run: rm -f warehouse/air_quality.duckdb
+
       - name: Load raw data into DuckDB
         run: python load/load_raw.py
 
