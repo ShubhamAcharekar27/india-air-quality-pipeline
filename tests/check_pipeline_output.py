@@ -12,7 +12,7 @@ con = duckdb.connect("warehouse/air_quality.duckdb", read_only=True)
 failures = []
 
 for table, expected in EXPECTED.items():
-    actual = con.sql(f"select count(*) from {table}").fetchone()[0]
+    actual = con.execute(f"select count(*) from {table}").fetchone()[0]
     status = "OK" if actual == expected else "MISMATCH"
     print(f"{status}: {table} has {actual} rows (expected {expected})")
     if actual != expected:
