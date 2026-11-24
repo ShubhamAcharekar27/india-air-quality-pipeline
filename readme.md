@@ -1,0 +1,1 @@
+![CI](https://github.com/ShubhamAcharekar27/india-air-quality-pipeline/actions/workflows/ci.yml/badge.svg)
